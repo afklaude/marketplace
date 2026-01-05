@@ -26,7 +26,7 @@ def respond(hook_response):
 
 
 def passthrough():
-    sys.exit(1)
+    sys.exit(0)
 
 
 def allow():
