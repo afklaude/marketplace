@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
+import datetime
 import json
 import os
-import socket
 import sys
 import time
 import urllib.request
@@ -13,8 +13,11 @@ POLL_TIMEOUT = 300
 
 
 def debug(msg):
+    if not os.environ.get("AFKLAUDE_DEBUG"):
+        return
+    ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(LOGFILE, "a") as f:
-        f.write(f"[request] {msg}\n")
+        f.write(f"[{ts}] [request] {msg}\n")
 
 
 def respond(hook_response):
@@ -71,7 +74,7 @@ def poll_status(url, token, request_id):
 
 
 def main():
-    url = os.environ.get("AFKLAUDE_URL", "")
+    url = os.environ.get("AFKLAUDE_URL", "https://api.afklaude.dev")
     token = os.environ.get("AFKLAUDE_TOKEN", "")
 
     debug(f"started, url={url}, token={'set' if token else 'unset'}")
@@ -85,7 +88,7 @@ def main():
         debug(f"input: {json.dumps(input_data)[:500]}")
     except Exception as e:
         debug(f"failed to parse input: {e}")
-        passthrough()
+        return passthrough()
 
     session_id = input_data.get("session_id", "")
     cwd = input_data.get("cwd", "")

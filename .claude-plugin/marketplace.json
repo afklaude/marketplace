@@ -8,8 +8,8 @@
     {
       "name": "afk",
       "source": "./plugins/afk",
-      "description": "Approve Claude Code requests from your phone while you're AFK",
-      "version": "1.0.0",
+      "description": "Let Claude cook. Approve requests from your phone.",
+      "version": "1.0.1",
       "author": {
         "name": "afklaude"
       }

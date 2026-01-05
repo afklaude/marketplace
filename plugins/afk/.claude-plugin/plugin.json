@@ -1,6 +1,6 @@
 {
   "name": "afk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Let Claude cook. Approve requests from your phone while you're AFK.",
   "author": {
     "name": "afklaude"

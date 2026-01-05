@@ -22,16 +22,15 @@ Add to your Claude Code settings at any level:
 ```json
 {
   "env": {
-    "AFKLAUDE_TOKEN": "your-api-key",
-    "AFKLAUDE_URL": "https://your-server-url"
+    "AFKLAUDE_TOKEN": "your-api-key"
   }
 }
 ```
 
 ## Commands
 
-- `/afk` — Enable AFK mode. Requests go to Slack/Discord.
-- `/back` — Disable AFK mode. Back to normal prompts.
+- `/afk:afk` — Enable AFK mode. Requests go to Slack/Discord.
+- `/afk:back` — Disable AFK mode. Back to normal prompts.
 
 ## License
 

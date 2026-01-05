@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import datetime
 import json
 import os
 import socket
@@ -9,8 +10,11 @@ import urllib.error
 LOGFILE = "/tmp/afklaude-debug.log"
 
 def debug(msg):
+    if not os.environ.get("AFKLAUDE_DEBUG"):
+        return
+    ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(LOGFILE, "a") as f:
-        f.write(f"[executed] {msg}\n")
+        f.write(f"[{ts}] [executed] {msg}\n")
 
 def error_message(e):
     if isinstance(e, socket.timeout):
@@ -34,7 +38,7 @@ def is_afklaude_command(tool_name, tool_input):
     return "scripts/cmd_afk.py" in command or "scripts/cmd_back.py" in command
 
 def main():
-    url = os.environ.get("AFKLAUDE_URL", "")
+    url = os.environ.get("AFKLAUDE_URL", "https://api.afklaude.dev")
     token = os.environ.get("AFKLAUDE_TOKEN", "")
 
     debug(f"started, url={url}, token={'set' if token else 'unset'}")
