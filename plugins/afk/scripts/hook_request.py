@@ -91,12 +91,13 @@ def main():
         return passthrough()
 
     session_id = input_data.get("session_id", "")
+    tool_use_id = input_data.get("tool_use_id", "")
     cwd = input_data.get("cwd", "")
     tool_name = input_data.get("tool_name", "")
     tool_input = input_data.get("tool_input", {})
     hook_event = input_data.get("hook_event_name", "PreToolUse")
 
-    debug(f"tool={tool_name} session={session_id} hook={hook_event}")
+    debug(f"tool={tool_name} session={session_id} tool_use_id={tool_use_id} hook={hook_event}")
 
     if is_afklaude_command(tool_name, tool_input):
         debug("afklaude command script, auto-approving")
@@ -104,6 +105,7 @@ def main():
 
     payload = {
         "session_id": session_id,
+        "tool_use_id": tool_use_id,
         "tool_name": tool_name,
         "tool_input": tool_input,
         "cwd": cwd,
