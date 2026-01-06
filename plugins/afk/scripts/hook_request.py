@@ -30,7 +30,7 @@ def passthrough():
 
 
 def allow():
-    return {"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "allow"}}
+    return {"hookSpecificOutput": {"hookEventName": "PermissionRequest", "decision": {"behavior": "allow"}}}
 
 
 def is_afklaude_command(tool_name, tool_input):
