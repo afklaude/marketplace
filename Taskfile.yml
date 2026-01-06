@@ -1,5 +1,8 @@
 version: '3'
 
+vars:
+  PLUGIN_JSON: plugins/afk/.claude-plugin/plugin.json
+
 tasks:
   default:
     desc: Show available tasks
@@ -7,14 +10,25 @@ tasks:
       - task --list
 
   release:
-    desc: "Tag and push release (usage: task release -- 1.0.0)"
-    cmds:
-      - jq --arg v "{{.VERSION}}" '.version = $v' plugins/afk/.claude-plugin/plugin.json > tmp.json && mv tmp.json plugins/afk/.claude-plugin/plugin.json
-      - git add -A
-      - git commit -m "v{{.VERSION}}"
-      - git tag -a v{{.VERSION}} -m "Release v{{.VERSION}}"
-      - git push origin main --tags
+    desc: "Release (usage: task release -- patch|minor|major)"
     vars:
-      VERSION: '{{.CLI_ARGS}}'
+      BUMP: '{{.CLI_ARGS}}'
+      CURRENT:
+        sh: jq -r '.version' {{.PLUGIN_JSON}}
+      NEW_VERSION:
+        sh: |
+          IFS='.' read -r major minor patch <<< "{{.CURRENT}}"
+          case "{{.BUMP}}" in
+            patch) echo "$major.$minor.$((patch+1))" ;;
+            minor) echo "$major.$((minor+1)).0" ;;
+            major) echo "$((major+1)).0.0" ;;
+            *) echo "invalid" && exit 1 ;;
+          esac
+    cmds:
+      - jq --arg v "{{.NEW_VERSION}}" '.version = $v' {{.PLUGIN_JSON}} > tmp.json && mv tmp.json {{.PLUGIN_JSON}}
+      - git add -A
+      - git commit -m "v{{.NEW_VERSION}}"
+      - git tag -a v{{.NEW_VERSION}} -m "Release v{{.NEW_VERSION}}"
+      - git push origin main --tags
     requires:
-      vars: [VERSION]
+      vars: [BUMP]
