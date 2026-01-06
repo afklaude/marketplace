@@ -51,6 +51,7 @@ def main():
         input_data = json.load(sys.stdin)
         debug(f"input: {json.dumps(input_data)[:500]}")
         tool_use_id = input_data.get("tool_use_id", "")
+        session_id = input_data.get("session_id", "")
         tool_name = input_data.get("tool_name", "")
         tool_input = input_data.get("tool_input", {})
     except Exception as e:
@@ -61,16 +62,22 @@ def main():
         debug("afklaude command, skipping executed notification")
         return
 
-    if not tool_use_id:
-        debug("no tool_use_id, skipping")
+    if not tool_use_id and not session_id:
+        debug("no tool_use_id or session_id, skipping")
         return
 
-    debug(f"tool_use_id={tool_use_id}")
+    debug(f"tool_use_id={tool_use_id} session_id={session_id}")
+
+    payload = {
+        "tool_use_id": tool_use_id,
+        "session_id": session_id,
+        "tool_input": tool_input,
+    }
 
     try:
         req = urllib.request.Request(
             f"{url}/executed",
-            data=json.dumps({"tool_use_id": tool_use_id}).encode(),
+            data=json.dumps(payload).encode(),
             headers={
                 "Authorization": f"Bearer {token}",
                 "Content-Type": "application/json",
