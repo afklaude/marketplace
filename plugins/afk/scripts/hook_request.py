@@ -85,7 +85,7 @@ def main():
 
     try:
         input_data = json.load(sys.stdin)
-        debug(f"input: {json.dumps(input_data)[:500]}")
+        debug(f"input: {json.dumps(input_data)}")
     except Exception as e:
         debug(f"failed to parse input: {e}")
         return passthrough()

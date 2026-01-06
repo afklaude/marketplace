@@ -49,7 +49,7 @@ def main():
 
     try:
         input_data = json.load(sys.stdin)
-        debug(f"input: {json.dumps(input_data)[:500]}")
+        debug(f"input: {json.dumps(input_data)}")
         tool_use_id = input_data.get("tool_use_id", "")
         session_id = input_data.get("session_id", "")
         tool_name = input_data.get("tool_name", "")
