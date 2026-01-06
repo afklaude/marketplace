@@ -95,7 +95,7 @@ def main():
     cwd = input_data.get("cwd", "")
     tool_name = input_data.get("tool_name", "")
     tool_input = input_data.get("tool_input", {})
-    hook_event = input_data.get("hook_event_name", "PreToolUse")
+    hook_event = input_data.get("hook_event_name", "PermissionRequest")
 
     debug(f"tool={tool_name} session={session_id} tool_use_id={tool_use_id} hook={hook_event}")
 
