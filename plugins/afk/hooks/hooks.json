@@ -2,7 +2,7 @@
   "hooks": {
     "PermissionRequest": [
       {
-        "matcher": "AskUserQuestion|Bash|Edit|ExitPlanMode|NotebookEdit|Skill|SlashCommand|WebFetch|WebSearch|Write",
+        "matcher": "*",
         "hooks": [
           {
             "type": "command",
