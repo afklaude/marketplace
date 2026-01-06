@@ -9,8 +9,11 @@ tasks:
   release:
     desc: "Tag and push release (usage: task release -- 1.0.0)"
     cmds:
+      - jq --arg v "{{.VERSION}}" '.version = $v' plugins/afk/.claude-plugin/plugin.json > tmp.json && mv tmp.json plugins/afk/.claude-plugin/plugin.json
+      - git add -A
+      - git commit -m "v{{.VERSION}}"
       - git tag -a v{{.VERSION}} -m "Release v{{.VERSION}}"
-      - git push origin v{{.VERSION}}
+      - git push origin main --tags
     vars:
       VERSION: '{{.CLI_ARGS}}'
     requires:
