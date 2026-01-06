@@ -5,7 +5,7 @@ import urllib.request
 import urllib.error
 
 def main():
-    url = os.environ.get("AFKLAUDE_URL", "")
+    url = os.environ.get("AFKLAUDE_URL", "https://api.afklaude.dev")
     token = os.environ.get("AFKLAUDE_TOKEN", "")
 
     if not url or not token:
